@@ -56,7 +56,8 @@ void mostrarMenu(Usuario *usuario) {
         printf("1. Consultar saldo\n");
         printf("2. Depositar dinero\n");
         printf("3. Retirar dinero\n");
-        printf("4. Salir\n");
+        printf("4. Ver historial de transacciones\n");
+        printf("5. Salir\n");
         printf("Seleccione: ");
         scanf("%d", &opcion);
 
@@ -67,17 +68,33 @@ void mostrarMenu(Usuario *usuario) {
 
             case 2: {
                 float monto;
-                scanf("%f", &monto);
-                usuario->saldo += monto;
-                break;
+    printf("Ingrese monto a depositar: ");
+    scanf("%f", &monto);
+
+    usuario->saldo += monto;
+
+    sprintf(usuario->historial[usuario->numTransacciones],
+            "Deposito: +%.2f", monto);
+    usuario->numTransacciones++;   
+    break;
             }
 
             case 3: {
                 float monto;
-                scanf("%f", &monto);
-                if (monto <= usuario->saldo)
-                    usuario->saldo -= monto;
-                break;
+    printf("Ingrese monto a retirar: ");
+    scanf("%f", &monto);
+
+    if (monto <= usuario->saldo) {
+        usuario->saldo -= monto;
+
+        sprintf(usuario->historial[usuario->numTransacciones],
+                "Retiro: -%.2f", monto);
+        usuario->numTransacciones++;
+    } else {
+        printf("Fondos insuficientes\n");
+    }
+
+    break;
             }
         
 
