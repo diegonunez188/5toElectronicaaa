@@ -2,6 +2,8 @@
 #include <string.h>
 
 #define MAX_USUARIOS 3
+#define MAX_TRANS 50
+
 
 // ===== ESTRUCTURA =====
 typedef struct {
@@ -9,13 +11,15 @@ typedef struct {
     char clave[20];
     char nombre[50];
     float saldo;
+    char historial[MAX_TRANS][50];
+    int numTransacciones;
 } Usuario;
 
 // ===== USUARIOS =====
 Usuario usuarios[MAX_USUARIOS] = {
-    {"juan01", "1234", "Juan Perez",400000.0},
-    {"maria02", "abcd", "Maria Lopez", 70000.0},
-    {"carlos03", "pass", "Carlos Diaz", 25000.0},
+    {"juan01", "1234", "Juan Perez",400000.0, {""}, 0},
+    {"maria02", "abcd", "Maria Lopez", 70000.0, {""}, 0},
+    {"carlos03", "pass", "Carlos Diaz", 25000.0, {""}, 0},
 };
 
 int totalUsuarios = 3;
@@ -75,8 +79,40 @@ void mostrarMenu(Usuario *usuario) {
                     usuario->saldo -= monto;
                 break;
             }
+        
+
+
+       case 4:
+                printf("\n=== HISTORIAL DE TRANSACCIONES ===\n");
+
+                if (usuario->numTransacciones == 0) {
+                    printf("No hay transacciones.\n");
+                } else {
+                    for (int i = 0; i < usuario->numTransacciones; i++) {
+                        printf("%d. %s\n", i + 1, usuario->historial[i]);
+                    }
+                }
+                break;
+
+            case 5:
+                printf("Saliendo del sistema...\n");
+                break;
+
+            default:
+                printf("Opcion invalida.\n");
         }
 
-    } while(opcion != 4);
+    } while (opcion != 5);
+}
 
+// ===== MAIN =====
+int main() {
+    Usuario *usuario = autenticar();
+
+    if (usuario != NULL) {
+        printf("Acceso permitido.\n");
+        mostrarMenu(usuario);
     }
+
+    return 0;
+}
