@@ -8,13 +8,14 @@ typedef struct {
     char usuario[20];
     char clave[20];
     char nombre[50];
+    float saldo;
 } Usuario;
 
 // ===== USUARIOS =====
 Usuario usuarios[MAX_USUARIOS] = {
-    {"juan01", "1234", "Juan Perez"},
-    {"maria02", "abcd", "Maria Lopez"},
-    {"carlos03", "pass", "Carlos Diaz"}
+    {"juan01", "1234", "Juan Perez",400000.0},
+    {"maria02", "abcd", "Maria Lopez", 70000.0},
+    {"carlos03", "pass", "Carlos Diaz", 25000.0},
 };
 
 int totalUsuarios = 3;
